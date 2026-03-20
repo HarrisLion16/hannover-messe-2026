@@ -2283,8 +2283,12 @@ p{font-size:22px;line-height:1.5}
     updateProgress();
   }
 
-  function nextSlide(){
-    if(videoPlaying) return; /* block auto-advance during video */
+  function nextSlide(manual){
+    if(videoPlaying && !manual) return; /* block auto-advance during video, allow manual */
+    if(videoPlaying && manual){
+      teaserVideo.pause();
+      videoPlaying = false;
+    }
     const next = (currentIndex + 1) % totalSlides;
     goToSlide(next);
   }
@@ -2370,10 +2374,11 @@ p{font-size:22px;line-height:1.5}
     if(e.key === 'ArrowRight' || e.key === ' '){
       e.preventDefault();
       stopAutoRotation();
-      nextSlide();
+      nextSlide(true);
       startAutoRotation();
     } else if(e.key === 'ArrowLeft'){
       e.preventDefault();
+      if(videoPlaying){ teaserVideo.pause(); videoPlaying = false; }
       stopAutoRotation();
       const prev = (currentIndex - 1 + totalSlides) % totalSlides;
       goToSlide(prev);
