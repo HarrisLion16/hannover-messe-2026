@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Lead Capture - Hannover Messe 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --navy: #232F3E;
+    --gold: #FCB516;
+    --charcoal: #424242;
+    --med-gray: #676869;
+    --light-gray: #EAEAEA;
+    --off-white: #F5F5F5;
+    --green: #30B676;
+    --light-blue: #ABCAE3;
+    --purple: #412C5D;
+    --steel-blue: #1F5D82;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: var(--navy);
+    color: var(--charcoal);
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    height: 100dvh;
+    max-width: 480px;
+    margin: 0 auto;
+    background: #FFFFFF;
+  }
+
+  /* Header */
+  .header {
+    background: var(--navy);
+    padding: 14px 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .header-title { color: #FFFFFF; font-size: 16px; font-weight: 700; }
+  .header-sub { color: var(--light-blue); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+  .header-back { color: var(--gold); font-size: 13px; font-weight: 700; text-decoration: none; padding: 6px 10px; border-radius: 6px; }
+  .header-back:active { background: rgba(252, 181, 22, 0.15); }
+  .header-accent { height: 3px; background: var(--gold); flex-shrink: 0; }
+
+  /* View tabs */
+  .view-tabs {
+    display: flex;
+    background: var(--navy);
+    padding: 0 4px;
+    gap: 3px;
+    padding-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .view-tab {
+    flex: 1;
+    padding: 10px 4px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    border: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-top: 3px solid transparent;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.2s;
+  }
+
+  .view-tab.active {
+    color: var(--navy);
+    background: #FFFFFF;
+    border-top-color: var(--gold);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--off-white);
+    border-bottom: 1px solid var(--light-gray);
+    flex-shrink: 0;
+  }
+
+  .stat-card {
+    flex: 1;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    color: var(--med-gray);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+
+  .stat-num.gold { color: var(--gold); }
+  .stat-num.green { color: var(--green); }
+  .stat-num.blue { color: var(--steel-blue); }
+
+  /* Capture section */
+  .capture-section {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--light-gray);
+    flex-shrink: 0;
+  }
+
+  .capture-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #FDD04B 0%, #D4960E 100%);
+    color: var(--navy);
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(252, 181, 22, 0.3);
+  }
+
+  .capture-btn:active { transform: scale(0.98); }
+  .capture-icon { font-size: 22px; }
+  #cameraInput { display: none; }
+
+  /* Views */
+  .view { display: none; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; flex-direction: column; }
+  .view.active { display: flex; }
+
+  /* Lead list */
+  .lead-list { padding: 8px 20px; }
+  .lead-empty { text-align: center; padding: 40px 20px; color: var(--med-gray); font-size: 14px; line-height: 1.6; }
+
+  .lead-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--light-gray);
+    align-items: center;
+  }
+
+  .lead-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--off-white);
+    flex-shrink: 0;
+  }
+
+  .lead-info { flex: 1; min-width: 0; }
+  .lead-time { font-size: 11px; color: var(--med-gray); margin-bottom: 2px; }
+  .lead-detail { font-size: 13px; color: var(--charcoal); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lead-detail-label { color: var(--med-gray); font-size: 11px; }
+
+  .lead-status {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .lead-status.uploaded { background: rgba(48, 182, 118, 0.12); color: var(--green); }
+  .lead-status.pending { background: rgba(252, 181, 22, 0.12); color: #D4960E; }
+
+  /* Processed leads */
+  .processed-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--light-gray);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .processed-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--off-white);
+    flex-shrink: 0;
+  }
+
+  .processed-info { flex: 1; }
+  .processed-name { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+  .processed-company { font-size: 13px; color: var(--purple); font-weight: 600; margin-bottom: 4px; }
+  .processed-title { font-size: 12px; color: var(--med-gray); margin-bottom: 6px; }
+
+  .processed-contact {
+    font-size: 12px;
+    color: var(--charcoal);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .processed-notes {
+    font-size: 11px;
+    color: var(--med-gray);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .processed-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--med-gray);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .refresh-btn {
+    display: block;
+    margin: 16px auto;
+    padding: 10px 24px;
+    background: var(--navy);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .refresh-btn:active { opacity: 0.8; }
+
+  /* Form overlay */
+  .form-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-overlay.visible { display: flex; }
+
+  .form-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .form-preview {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    background: var(--off-white);
+  }
+
+  .form-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--med-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 12px;
+    -webkit-appearance: none;
+  }
+
+  .form-input:focus { outline: none; border-color: var(--gold); }
+
+  .form-actions { display: flex; gap: 10px; margin-top: 4px; }
+
+  .form-cancel {
+    flex: 1;
+    padding: 12px;
+    background: var(--light-gray);
+    color: var(--charcoal);
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .form-save {
+    flex: 2;
+    padding: 12px;
+    background: var(--green);
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .form-save:disabled { opacity: 0.5; }
+  .form-save:active { background: #28a065; }
+  .form-status { text-align: center; font-size: 12px; color: var(--med-gray); margin-top: 8px; }
+
+  .lead-item { cursor: pointer; }
+  .lead-item:active { background: var(--off-white); }
+  .lead-edit-hint { font-size: 10px; color: var(--steel-blue); margin-top: 2px; }
+
+  .processed-item { cursor: pointer; }
+  .processed-item:active { background: var(--off-white); }
+
+  #libraryInput { display: none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div>
+      <div class="header-title">Lead Capture</div>
+      <div class="header-sub">Hannover Messe 2026</div>
+    </div>
+    <a href="../" class="header-back">&lt; QR App</a>
+  </div>
+
+  <div class="view-tabs">
+    <button class="view-tab active" data-view="capture">Capture</button>
+    <button class="view-tab" data-view="processed">Processed Leads</button>
+  </div>
+
+  <!-- CAPTURE VIEW -->
+  <div class="view active" id="captureView">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-num gold" id="statLocal">0</div>
+        <div class="stat-label">My Captures</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num blue" id="statCloud">--</div>
+        <div class="stat-label">Team Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num green" id="statProcessed">--</div>
+        <div class="stat-label">Processed</div>
+      </div>
+    </div>
+
+    <div class="capture-section" style="display:flex;gap:8px;">
+      <button class="capture-btn" id="captureBtn" style="flex:1;">
+        <span class="capture-icon">&#x1F4F7;</span>
+        <span>Camera</span>
+      </button>
+      <button class="capture-btn" id="libraryBtn" style="flex:1;background:linear-gradient(135deg, #2778A4 0%, #1A4E6E 100%);color:#fff;box-shadow:0 4px 14px rgba(31,93,130,0.3);">
+        <span class="capture-icon">&#x1F5BC;</span>
+        <span>Library</span>
+      </button>
+      <input type="file" id="cameraInput" accept="image/*" capture="environment">
+      <input type="file" id="libraryInput" accept="image/*">
+    </div>
+
+    <div class="lead-list" id="leadList">
+      <div class="lead-empty" id="emptyState">
+        No leads captured yet.<br>Tap "Capture Badge" to photograph a badge.
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESSED VIEW -->
+  <div class="view" id="processedView">
+    <button class="refresh-btn" id="refreshProcessed">Refresh</button>
+    <div id="processedList">
+      <div class="processed-empty" id="processedEmpty">
+        No leads processed yet.<br>Leads will appear here after the agentic team runs OCR on captured badges.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Form overlay -->
+<div class="form-overlay" id="formOverlay">
+  <div class="form-card">
+    <img class="form-preview" id="formPreview" alt="Badge preview">
+    <label class="form-label">Phone (optional)</label>
+    <input class="form-input" id="formPhone" type="tel" placeholder="555-123-4567" inputmode="tel">
+    <label class="form-label">Email (optional)</label>
+    <input class="form-input" id="formEmail" type="email" placeholder="name@company.com" inputmode="email">
+    <label class="form-label">Notes (optional)</label>
+    <input class="form-input" id="formNotes" type="text" placeholder="Interested in IAP, follow up Thurs...">
+    <div class="form-actions">
+      <button class="form-cancel" id="formCancel">Cancel</button>
+      <button class="form-save" id="formSave">Save & Upload</button>
+    </div>
+    <div class="form-status" id="formStatus"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Token from localStorage
+  var GITHUB_TOKEN = localStorage.getItem('hannover_gh_token') || '';
+  if (!GITHUB_TOKEN) {
+    GITHUB_TOKEN = prompt('Paste the GitHub upload token:') || '';
+    if (GITHUB_TOKEN) localStorage.setItem('hannover_gh_token', GITHUB_TOKEN);
+  }
+
+  var REPO = 'HarrisLion16/hannover-messe-2026';
+  var CAPTURES_PATH = 'qr-app/captures/';
+  var API = 'https://api.github.com/repos/' + REPO;
+  var RAW = 'https://raw.githubusercontent.com/' + REPO + '/main/';
+
+  var leads = JSON.parse(localStorage.getItem('hannover_leads') || '[]');
+  var currentImageB64 = null;
+  var editingLeadIdx = -1; // -1 = new capture, >= 0 = editing existing
+  var editingProcessedIdx = -1; // -1 = not editing processed, >= 0 = editing processed lead
+
+  // DOM refs
+  var captureBtn = document.getElementById('captureBtn');
+  var cameraInput = document.getElementById('cameraInput');
+  var formOverlay = document.getElementById('formOverlay');
+  var formPreview = document.getElementById('formPreview');
+  var formPhone = document.getElementById('formPhone');
+  var formEmail = document.getElementById('formEmail');
+  var formNotes = document.getElementById('formNotes');
+  var formSave = document.getElementById('formSave');
+  var formCancel = document.getElementById('formCancel');
+  var formStatus = document.getElementById('formStatus');
+  var leadList = document.getElementById('leadList');
+  var emptyState = document.getElementById('emptyState');
+  var statLocal = document.getElementById('statLocal');
+  var statCloud = document.getElementById('statCloud');
+  var statProcessed = document.getElementById('statProcessed');
+
+  // --- VIEW TABS ---
+  var viewTabs = document.querySelectorAll('.view-tab');
+  var views = document.querySelectorAll('.view');
+
+  for (var t = 0; t < viewTabs.length; t++) {
+    viewTabs[t].addEventListener('click', function() {
+      for (var i = 0; i < viewTabs.length; i++) {
+        viewTabs[i].classList.remove('active');
+        views[i].classList.remove('active');
+      }
+      this.classList.add('active');
+      document.getElementById(this.getAttribute('data-view') + 'View').classList.add('active');
+
+      if (this.getAttribute('data-view') === 'processed') loadProcessed();
+    });
+  }
+
+  // --- STATS ---
+  function updateLocalStats() {
+    statLocal.textContent = leads.length;
+  }
+
+  function fetchCloudStats() {
+    if (!GITHUB_TOKEN) return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', API + '/contents/' + CAPTURES_PATH.slice(0, -1));
+    xhr.setRequestHeader('Authorization', 'Bearer ' + GITHUB_TOKEN);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        var files = JSON.parse(xhr.responseText);
+        var jpgCount = 0;
+        for (var i = 0; i < files.length; i++) {
+          if (files[i].name.match(/\.jpg$/i)) jpgCount++;
+        }
+        statCloud.textContent = jpgCount;
+      } else if (xhr.status === 404) {
+        statCloud.textContent = '0';
+      }
+    };
+    xhr.onerror = function() { statCloud.textContent = '?'; };
+    xhr.send();
+
+    // Check processed count via API
+    var xhr2 = new XMLHttpRequest();
+    xhr2.open('GET', API + '/contents/' + CAPTURES_PATH + 'processed.json');
+    xhr2.setRequestHeader('Authorization', 'Bearer ' + GITHUB_TOKEN);
+    xhr2.onload = function() {
+      if (xhr2.status === 200) {
+        try {
+          var resp = JSON.parse(xhr2.responseText);
+          var content = atob(resp.content.replace(/\n/g, ''));
+          var data = JSON.parse(content);
+          statProcessed.textContent = data.length;
+        } catch(e) { statProcessed.textContent = '0'; }
+      } else {
+        statProcessed.textContent = '0';
+      }
+    };
+    xhr2.onerror = function() { statProcessed.textContent = '0'; };
+    xhr2.send();
+  }
+
+  // --- RENDER LEADS ---
+  function renderLeads() {
+    updateLocalStats();
+    emptyState.style.display = leads.length === 0 ? 'block' : 'none';
+
+    var items = leadList.querySelectorAll('.lead-item');
+    for (var i = 0; i < items.length; i++) items[i].remove();
+
+    for (var j = leads.length - 1; j >= 0; j--) {
+      var lead = leads[j];
+      var div = document.createElement('div');
+      div.className = 'lead-item';
+
+      var details = '';
+      if (lead.phone) details += '<div class="lead-detail"><span class="lead-detail-label">Phone:</span> ' + lead.phone + '</div>';
+      if (lead.email) details += '<div class="lead-detail"><span class="lead-detail-label">Email:</span> ' + lead.email + '</div>';
+      if (lead.notes) details += '<div class="lead-detail"><span class="lead-detail-label">Notes:</span> ' + lead.notes + '</div>';
+      if (!details) details = '<div class="lead-detail" style="color:#999;">No contact info</div>';
+
+      div.innerHTML =
+        '<img class="lead-thumb" src="' + (lead.thumbData || '') + '" alt="Badge">' +
+        '<div class="lead-info">' +
+          '<div class="lead-time">' + lead.time + ' <span class="lead-edit-hint">tap to edit</span></div>' +
+          details +
+        '</div>' +
+        '<div class="lead-status ' + (lead.uploaded ? 'uploaded' : 'pending') + '">' +
+          (lead.uploaded ? 'Uploaded' : 'Pending') +
+        '</div>';
+
+      div.setAttribute('data-lead-idx', j);
+      div.addEventListener('click', function() {
+        var idx = parseInt(this.getAttribute('data-lead-idx'), 10);
+        openEditLead(idx);
+      });
+
+      leadList.appendChild(div);
+    }
+  }
+
+  function saveLeads() {
+    localStorage.setItem('hannover_leads', JSON.stringify(leads));
+  }
+
+  // --- PROCESSED LEADS ---
+  function loadProcessed() {
+    var list = document.getElementById('processedList');
+    var empty = document.getElementById('processedEmpty');
+    var btn = document.getElementById('refreshProcessed');
+    btn.textContent = 'Loading...';
+    btn.disabled = true;
+
+    // Use GitHub API (no caching issues) to get the file content
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', API + '/contents/' + CAPTURES_PATH + 'processed.json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + GITHUB_TOKEN);
+    xhr.onload = function() {
+      btn.textContent = 'Refresh';
+      btn.disabled = false;
+
+      if (xhr.status !== 200) {
+        empty.style.display = 'block';
+        empty.textContent = 'No processed leads yet.';
+        return;
+      }
+
+      try {
+        var resp = JSON.parse(xhr.responseText);
+        var content = atob(resp.content.replace(/\n/g, ''));
+        var data = JSON.parse(content);
+        lastProcessedData = data;
+        lastProcessedSha = resp.sha;
+        if (!data.length) { empty.style.display = 'block'; return; }
+
+        empty.style.display = 'none';
+        // Clear old items
+        var old = list.querySelectorAll('.processed-item');
+        for (var i = 0; i < old.length; i++) old[i].remove();
+
+        statProcessed.textContent = data.length;
+
+        for (var j = 0; j < data.length; j++) {
+          var lead = data[j];
+          var div = document.createElement('div');
+          div.className = 'processed-item';
+
+          var photoUrl = lead.photo ? RAW + CAPTURES_PATH + lead.photo : '';
+          var contact = '';
+          if (lead.phone) contact += '<div>Phone: ' + lead.phone + '</div>';
+          if (lead.email) contact += '<div>Email: ' + lead.email + '</div>';
+
+          div.innerHTML =
+            (photoUrl ? '<img class="processed-photo" src="' + photoUrl + '" alt="Badge">' : '') +
+            '<div class="processed-info">' +
+              '<div class="processed-name">' + (lead.name || 'Unknown') + '</div>' +
+              (lead.company ? '<div class="processed-company">' + lead.company + '</div>' : '') +
+              (lead.title ? '<div class="processed-title">' + lead.title + '</div>' : '') +
+              (contact ? '<div class="processed-contact">' + contact + '</div>' : '') +
+              '<div class="processed-notes">' + (lead.notes ? '"' + lead.notes + '"' : '<span class="lead-edit-hint">tap to add notes</span>') + '</div>' +
+            '</div>';
+
+          div.setAttribute('data-processed-idx', j);
+          div.addEventListener('click', function() {
+            var idx = parseInt(this.getAttribute('data-processed-idx'), 10);
+            openEditProcessed(idx);
+          });
+
+          list.appendChild(div);
+        }
+      } catch(e) {
+        empty.style.display = 'block';
+        empty.innerHTML = 'Error loading leads.<br>Pull to try again.';
+      }
+    };
+    xhr.onerror = function() {
+      btn.textContent = 'Refresh';
+      btn.disabled = false;
+      empty.style.display = 'block';
+    };
+    xhr.send();
+  }
+
+  document.getElementById('refreshProcessed').addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    loadProcessed();
+  });
+
+  // --- IMAGE PROCESSING ---
+  function processImage(file, callback) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement('canvas');
+        var maxW = 1200;
+        var scale = Math.min(1, maxW / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        var uploadData = canvas.toDataURL('image/jpeg', 0.85);
+
+        var thumbCanvas = document.createElement('canvas');
+        var thumbScale = Math.min(1, 200 / img.width);
+        thumbCanvas.width = img.width * thumbScale;
+        thumbCanvas.height = img.height * thumbScale;
+        thumbCanvas.getContext('2d').drawImage(img, 0, 0, thumbCanvas.width, thumbCanvas.height);
+        var thumbData = thumbCanvas.toDataURL('image/jpeg', 0.6);
+
+        callback(uploadData, thumbData);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // --- GITHUB UPLOAD ---
+  function uploadToGitHub(filename, base64Content, callback) {
+    var raw = base64Content.split(',')[1];
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', API + '/contents/' + CAPTURES_PATH + filename);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + GITHUB_TOKEN);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() { callback(xhr.status >= 200 && xhr.status < 300); };
+    xhr.onerror = function() { callback(false); };
+    xhr.send(JSON.stringify({ message: 'Lead capture: ' + filename, content: raw, branch: 'main' }));
+  }
+
+  // --- EDIT LEAD (capture tab) ---
+  function openEditLead(idx) {
+    var lead = leads[idx];
+    editingLeadIdx = idx;
+    currentImageB64 = null; // no new image
+    formPreview.src = lead.thumbData || '';
+    formPhone.value = lead.phone || '';
+    formEmail.value = lead.email || '';
+    formNotes.value = lead.notes || '';
+    formStatus.textContent = '';
+    formSave.disabled = false;
+    formSave.textContent = 'Update';
+    formOverlay.classList.add('visible');
+  }
+
+  // --- EDIT PROCESSED LEAD (processed tab) ---
+  var lastProcessedData = [];
+  var lastProcessedSha = '';
+
+  function openEditProcessed(idx) {
+    var lead = lastProcessedData[idx];
+    editingProcessedIdx = idx;
+    editingLeadIdx = -1;
+    currentImageB64 = null;
+
+    // Show badge photo from GitHub
+    var photoUrl = lead.photo ? RAW + CAPTURES_PATH + lead.photo : '';
+    formPreview.src = photoUrl;
+    formPhone.value = lead.phone || '';
+    formEmail.value = lead.email || '';
+    formNotes.value = lead.notes || '';
+    formStatus.textContent = (lead.name || '') + (lead.company ? ' - ' + lead.company : '');
+    formSave.disabled = false;
+    formSave.textContent = 'Update';
+    formOverlay.classList.add('visible');
+  }
+
+  function saveProcessedEdit() {
+    var idx = editingProcessedIdx;
+    var lead = lastProcessedData[idx];
+    lead.phone = formPhone.value.trim();
+    lead.email = formEmail.value.trim();
+    lead.notes = formNotes.value.trim();
+
+    formSave.disabled = true;
+    formSave.textContent = 'Saving...';
+
+    var content = JSON.stringify(lastProcessedData, null, 2);
+    var b64 = btoa(unescape(encodeURIComponent(content)));
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', API + '/contents/' + CAPTURES_PATH + 'processed.json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + GITHUB_TOKEN);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onerror = function() {
+      formStatus.textContent = 'Network error';
+      formSave.disabled = false;
+      formSave.textContent = 'Update';
+    };
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        var resp = JSON.parse(xhr.responseText);
+        lastProcessedSha = resp.content.sha;
+        formStatus.textContent = 'Updated!';
+        formSave.textContent = 'Done!';
+        editingProcessedIdx = -1;
+        setTimeout(function() {
+          formOverlay.classList.remove('visible');
+          loadProcessed();
+        }, 800);
+      } else {
+        formStatus.textContent = 'Save failed - try again';
+        formSave.disabled = false;
+        formSave.textContent = 'Update';
+      }
+    };
+    xhr.send(JSON.stringify({ message: 'Update ' + (lead.name || 'lead'), content: b64, sha: lastProcessedSha, branch: 'main' }));
+  }
+
+  // --- CAPTURE FLOW ---
+  captureBtn.addEventListener('click', function() { cameraInput.click(); });
+
+  var libraryInput = document.getElementById('libraryInput');
+  document.getElementById('libraryBtn').addEventListener('click', function() { libraryInput.click(); });
+
+  function handleFileSelect(e) {
+    if (!e.target.files || !e.target.files[0]) return;
+    editingLeadIdx = -1;
+    processImage(e.target.files[0], function(uploadData, thumbData) {
+      currentImageB64 = uploadData;
+      formPreview.src = uploadData;
+      formPhone.value = '';
+      formEmail.value = '';
+      formNotes.value = '';
+      formStatus.textContent = '';
+      formSave.disabled = false;
+      formSave.textContent = 'Save & Upload';
+      formOverlay.classList.add('visible');
+    });
+    e.target.value = '';
+  }
+
+  cameraInput.addEventListener('change', handleFileSelect);
+  libraryInput.addEventListener('change', handleFileSelect);
+
+  formCancel.addEventListener('click', function() {
+    formOverlay.classList.remove('visible');
+    currentImageB64 = null;
+    editingLeadIdx = -1;
+    editingProcessedIdx = -1;
+  });
+
+  formSave.addEventListener('click', function() {
+    formSave.disabled = true;
+    formStatus.textContent = '';
+
+    // --- EDITING PROCESSED LEAD ---
+    if (editingProcessedIdx >= 0) {
+      saveProcessedEdit();
+      return;
+    }
+
+    // --- EDITING EXISTING LEAD ---
+    if (editingLeadIdx >= 0) {
+      formSave.textContent = 'Updating...';
+      var lead = leads[editingLeadIdx];
+      lead.phone = formPhone.value.trim();
+      lead.email = formEmail.value.trim();
+      lead.notes = formNotes.value.trim();
+
+      // Re-upload the metadata JSON if it was previously uploaded
+      if (lead.uploaded && lead.id) {
+        var meta = {
+          timestamp: lead.timestamp,
+          phone: lead.phone,
+          email: lead.email,
+          notes: lead.notes,
+          photo: lead.id + '.jpg'
+        };
+        // Need to get the SHA of the existing json file first
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', API + '/contents/' + CAPTURES_PATH + lead.id + '.json');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + GITHUB_TOKEN);
+        xhr.onerror = function() {
+          saveLeads();
+          renderLeads();
+          formStatus.textContent = 'Network error - saved locally';
+          formSave.disabled = false;
+          formSave.textContent = 'Update';
+          editingLeadIdx = -1;
+          setTimeout(function() { formOverlay.classList.remove('visible'); }, 1500);
+        };
+        xhr.onload = function() {
+          var metaB64 = btoa(JSON.stringify(meta, null, 2));
+          var body = { message: 'Update notes: ' + lead.id, content: metaB64, branch: 'main' };
+          if (xhr.status === 200) {
+            body.sha = JSON.parse(xhr.responseText).sha;
+          }
+          var xhr2 = new XMLHttpRequest();
+          xhr2.open('PUT', API + '/contents/' + CAPTURES_PATH + lead.id + '.json');
+          xhr2.setRequestHeader('Authorization', 'Bearer ' + GITHUB_TOKEN);
+          xhr2.setRequestHeader('Content-Type', 'application/json');
+          xhr2.onload = function() {
+            saveLeads();
+            renderLeads();
+            formStatus.textContent = 'Updated!';
+            formSave.textContent = 'Done!';
+            editingLeadIdx = -1;
+            setTimeout(function() { formOverlay.classList.remove('visible'); }, 800);
+          };
+          xhr2.send(JSON.stringify(body));
+        };
+        xhr.send();
+      } else {
+        saveLeads();
+        renderLeads();
+        formStatus.textContent = 'Updated locally';
+        formSave.textContent = 'Done!';
+        editingLeadIdx = -1;
+        setTimeout(function() { formOverlay.classList.remove('visible'); }, 800);
+      }
+      return;
+    }
+
+    // --- NEW CAPTURE ---
+    if (!currentImageB64) return;
+    formSave.textContent = 'Uploading...';
+
+    var now = new Date();
+    var dateStr = now.toISOString().split('T')[0];
+    var timeStr = now.toTimeString().split(' ')[0].replace(/:/g, '');
+    var seq = String(leads.length + 1).padStart(3, '0');
+    var baseFilename = dateStr + '_' + timeStr + '_' + seq;
+
+    var lead = {
+      id: baseFilename,
+      time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: now.toISOString(),
+      phone: formPhone.value.trim(),
+      email: formEmail.value.trim(),
+      notes: formNotes.value.trim(),
+      thumbData: null,
+      uploaded: false
+    };
+
+    var img = new Image();
+    img.onload = function() {
+      var tc = document.createElement('canvas');
+      var s = Math.min(1, 200 / img.width);
+      tc.width = img.width * s;
+      tc.height = img.height * s;
+      tc.getContext('2d').drawImage(img, 0, 0, tc.width, tc.height);
+      lead.thumbData = tc.toDataURL('image/jpeg', 0.5);
+
+      uploadToGitHub(baseFilename + '.jpg', currentImageB64, function(photoOk) {
+        if (!photoOk) {
+          formStatus.textContent = 'Upload failed - saved locally';
+          leads.push(lead);
+          saveLeads();
+          renderLeads();
+          formSave.disabled = false;
+          formSave.textContent = 'Save & Upload';
+          setTimeout(function() { formOverlay.classList.remove('visible'); }, 1500);
+          return;
+        }
+
+        var meta = {
+          timestamp: lead.timestamp,
+          phone: lead.phone,
+          email: lead.email,
+          notes: lead.notes,
+          photo: baseFilename + '.jpg'
+        };
+
+        var metaB64 = 'data:application/json;base64,' + btoa(JSON.stringify(meta, null, 2));
+        uploadToGitHub(baseFilename + '.json', metaB64, function(metaOk) {
+          lead.uploaded = true;
+          leads.push(lead);
+          saveLeads();
+          renderLeads();
+          fetchCloudStats();
+          formStatus.textContent = 'Uploaded!';
+          formSave.textContent = 'Done!';
+          currentImageB64 = null;
+          setTimeout(function() { formOverlay.classList.remove('visible'); }, 1000);
+        });
+      });
+    };
+    img.src = currentImageB64;
+  });
+
+  // --- INIT ---
+  renderLeads();
+  fetchCloudStats();
+})();
+</script>
+</body>
+</html>
