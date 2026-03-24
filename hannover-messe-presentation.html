@@ -38,7 +38,7 @@ body{width:100vw;height:100vh;overflow:hidden;background:#0d0b2e;display:flex;al
   --litmus-green:#4CAF50;
   --litmus-green-light:#81C784;
   --litmus-dark:#2E3B4E;
-  --slide-duration:18s;
+  --slide-duration:10s;
   --transition-duration:0.8s;
 }
 
@@ -175,10 +175,10 @@ p{font-size:22px;line-height:1.5}
 .slide.active .d10{animation-delay:1.5s}
 
 /* ===== CENTRIC LOGO ===== */
-.logo{font-size:42px;font-weight:700;letter-spacing:3px;color:var(--white)}
-.logo .parens{color:var(--gold);font-weight:300}
-.logo-sm{font-size:28px;letter-spacing:2px}
-.logo-lg{font-size:72px;letter-spacing:5px}
+.logo{display:inline-block}
+.logo img{height:42px;width:auto}
+.logo-sm img{height:20px;width:auto}
+.logo-lg img{height:72px;width:auto}
 
 /* ===== MICROSOFT PARTNER BADGE ===== */
 .ms-badge{
@@ -438,10 +438,10 @@ p{font-size:22px;line-height:1.5}
   padding:0 60px;
   background:linear-gradient(0deg,rgba(0,0,0,0.3) 0%,transparent 100%);
 }
-.brand-bar .logo-sm{font-size:20px;opacity:0.6}
+.brand-bar .logo-sm{opacity:0.6}
 .brand-bar .event-tag{font-size:16px;opacity:0.4;font-weight:500}
 .bg-light .brand-bar{background:linear-gradient(0deg,rgba(0,0,0,0.05) 0%,transparent 100%)}
-.bg-light .brand-bar .logo-sm{color:var(--navy);opacity:0.4}
+.bg-light .brand-bar .logo-sm{opacity:0.4}
 .bg-light .brand-bar .event-tag{color:var(--navy);opacity:0.3}
 
 /* ===== SVG ENHANCEMENT ANIMATIONS ===== */
@@ -597,8 +597,8 @@ p{font-size:22px;line-height:1.5}
 .fs-overlay.hidden{opacity:0;pointer-events:none}
 .fs-overlay h2{font-size:48px;font-weight:700;color:var(--white);margin-bottom:16px;font-family:var(--font-main)}
 .fs-overlay p{font-size:20px;color:var(--white);opacity:0.5;font-family:var(--font-main)}
-.fs-overlay .fs-logo{font-size:36px;font-weight:700;letter-spacing:3px;color:var(--white);margin-bottom:40px;font-family:var(--font-main)}
-.fs-overlay .fs-logo .parens{color:var(--gold);font-weight:300}
+.fs-overlay .fs-logo{margin-bottom:40px}
+.fs-overlay .fs-logo img{height:48px;width:auto}
 
 /* ===== FABRIC HERO - STATIC OVERRIDE ===== */
 .slide[data-slide="4"] .dashed-orbit { animation: none !important; }
@@ -705,7 +705,7 @@ p{font-size:22px;line-height:1.5}
     <div style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
       <div class="anim fade-scale d0">
         <div class="logo logo-lg" style="margin-bottom:32px">
-          <span class="parens">((</span>CENTRIC<span class="parens">))</span>
+          <img src="centric-logo.svg" alt="Centric Consulting">
         </div>
       </div>
       <div class="anim fade-up d2" style="width:80px;height:5px;background:var(--gold);border-radius:3px;margin:0 auto 36px auto"></div>
@@ -1330,7 +1330,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1406,7 +1406,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1422,7 +1422,7 @@ p{font-size:22px;line-height:1.5}
     </p>
     <div class="partner-split anim fade-up d3">
       <div class="partner-col centric">
-        <h3><span class="parens" style="font-weight:300">((</span>CENTRIC<span class="parens" style="font-weight:300">))</span> Brings</h3>
+        <h3><img src="centric-logo.svg" alt="Centric" style="height:24px;vertical-align:middle;margin-right:8px">Brings</h3>
         <div class="partner-item"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--gold)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Manufacturing operations leadership</div>
         <div class="partner-item"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--gold)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Shop floor domain experts</div>
         <div class="partner-item"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--gold)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Data and analytics execution</div>
@@ -1439,7 +1439,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1522,7 +1522,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1574,7 +1574,7 @@ p{font-size:22px;line-height:1.5}
       <p style="font-size:16px;opacity:0.55;margin-top:4px;opacity:0.7">Vendor-agnostic industrial data. Connect any equipment, normalize, and deliver to any cloud or enterprise system.</p>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1659,7 +1659,7 @@ p{font-size:22px;line-height:1.5}
           <circle cx="40" cy="42" r="1.2" fill="var(--gold)" opacity="0.7"/>
         </svg>
         <h4>Cybersecurity</h4>
-        <p>vCISO, penetration testing, GRC, identity access management</p>
+        <p>TISAX, ISO 27001, penetration testing, GRC, identity access management</p>
       </div>
       <!-- Litmus Industrial Edge: Factory with edge nodes -->
       <div class="pillar anim fade-up d6">
@@ -1714,7 +1714,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1752,7 +1752,7 @@ p{font-size:22px;line-height:1.5}
       <div class="compare-cell">Enhanced governance and access control</div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1861,7 +1861,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1910,7 +1910,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -1918,7 +1918,7 @@ p{font-size:22px;line-height:1.5}
   <!-- ===== SLIDE: Video Showcase ===== -->
   <div class="slide" data-slide="10" style="background:#000;padding:0;overflow:hidden">
     <div style="position:absolute;top:0;left:0;width:100%;height:100%">
-      <video id="teaserVideo" muted playsinline style="width:100%;height:100%;object-fit:cover">
+      <video id="teaserVideo" playsinline style="width:100%;height:100%;object-fit:cover">
         <source src="litmus-centric-teaser.mp4" type="video/mp4">
       </video>
     </div>
@@ -1929,7 +1929,7 @@ p{font-size:22px;line-height:1.5}
     <div class="bg-particles"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <!-- Centric + Litmus Partnership Header -->
     <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:8px" class="anim fade-up d0">
-      <div class="logo" style="font-size:28px"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo" style="font-size:28px"><img src="centric-logo.svg" alt="Centric Consulting" style="height:28px"></div>
       <span style="font-size:28px;color:var(--gold);font-weight:300">+</span>
       <span style="font-size:24px;font-weight:700;color:var(--litmus-green);letter-spacing:2px">LITMUS</span>
       <span style="font-size:28px;color:var(--gold);font-weight:300">=</span>
@@ -1999,7 +1999,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -2038,7 +2038,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -2079,7 +2079,7 @@ p{font-size:22px;line-height:1.5}
       </div>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -2172,7 +2172,7 @@ p{font-size:22px;line-height:1.5}
       </p>
     </div>
     <div class="brand-bar">
-      <div class="logo-sm"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+      <div class="logo-sm"><img src="centric-logo.svg" alt="Centric Consulting"></div>
       <span class="event-tag">Hannover Messe 2026</span>
     </div>
   </div>
@@ -2190,7 +2190,7 @@ p{font-size:22px;line-height:1.5}
 
 <!-- Fullscreen Start Overlay -->
 <div class="fs-overlay" id="fsOverlay">
-  <div class="fs-logo"><span class="parens">((</span>CENTRIC<span class="parens">))</span></div>
+  <div class="fs-logo"><img src="centric-logo.svg" alt="Centric Consulting"></div>
   <h2>Click to Start Presentation</h2>
   <p>Enters fullscreen mode with auto-advancing slides</p>
   <p style="margin-top:24px;font-size:14px;opacity:0.3">Press F to toggle fullscreen at any time &nbsp;|&nbsp; P to pause &nbsp;|&nbsp; Arrow keys to navigate</p>
@@ -2201,7 +2201,7 @@ p{font-size:22px;line-height:1.5}
   'use strict';
 
   /* ===== CONFIG ===== */
-  const SLIDE_DURATION = 18000;   /* ms per slide (18 seconds) */
+  const SLIDE_DURATION = 10000;   /* ms per slide (10 seconds) */
   const TRANSITION_MS  = 800;     /* CSS transition duration */
 
   /* ===== STATE ===== */
@@ -2318,7 +2318,15 @@ p{font-size:22px;line-height:1.5}
     stopAutoRotation();
     videoPlaying = true;
     teaserVideo.currentTime = 0;
-    teaserVideo.play();
+    teaserVideo.muted = false;
+    var playPromise = teaserVideo.play();
+    if(playPromise !== undefined){
+      playPromise.catch(function(){
+        /* Browser blocked unmuted autoplay - fall back to muted */
+        teaserVideo.muted = true;
+        teaserVideo.play();
+      });
+    }
     /* Hide progress bar during video - it will resume after */
     cancelAnimationFrame(progressTimer);
     progressBar.style.width = '0%';
